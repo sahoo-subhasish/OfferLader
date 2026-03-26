@@ -1,4 +1,3 @@
-// src/pages/Contests.jsx
 import React from 'react';
 
 export default function Contests() {

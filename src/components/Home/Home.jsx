@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../Card';
-import { cardInfo } from '../../data';    // Adjust path if needed
+import { cardInfo } from '../../data';
+import { Link } from 'react-router-dom';
 
 export default function Home(){
     return (
@@ -11,6 +12,7 @@ export default function Home(){
               
               {
                 cardInfo.map((card, index) => (
+                  <Link to={card.path || "#"} key={index} className="no-underline">
                   <Card
                   key = {index}
                   title={card.title}
@@ -18,6 +20,7 @@ export default function Home(){
                   bgColor={card.bgColor}
                   desc={card.desc}
                 />
+                </Link>
                 ))
               }
 
