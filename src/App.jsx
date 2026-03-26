@@ -5,6 +5,7 @@ import ContestBtn from './components/ContestBtn';
 import Home from './components/Home/Home';
 import Contests from './components/Contests/Contests';
 import Basic from './components/Basic/Basic';
+import Tier5 from './components/T5/Tier5';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/Home" element={<Home />} />
             <Route path="/contests" element={<Contests />} />
             <Route path="/basic" element={<Basic />} />
+            <Route path="/tier5" element={<Tier5 />} />
           </Routes>
           
 
