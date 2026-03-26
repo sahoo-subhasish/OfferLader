@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { BasicProblems } from '../../Data/BasicProblems';
+import { Tier3Problems } from '../../Data/Tier-3';
+import { cardInfo } from '../../data';
 
 // --- SUB-COMPONENT: STAT BAR ---
 const StatBar = ({ label, solved, total, color }) => {
@@ -23,7 +24,7 @@ const StatBar = ({ label, solved, total, color }) => {
 
 export default function ProblemExplorer() {
   const [activeFilter, setActiveFilter] = useState(null);
-  const [problems, setProblems] = useState(BasicProblems);
+  const [problems, setProblems] = useState(Tier3Problems);
 
             const toggleSolved = (id) => {
               setProblems(prev => prev.map((prob) => prob.id === id ? {...prob, isSolved: !prob.isSolved} : prob))
@@ -52,10 +53,8 @@ export default function ProblemExplorer() {
       {/* HEADER SECTION */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
         <div className="max-w-xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">Beginner</h1>
-          <p className="text-[#888] text-sm leading-relaxed font-medium">
-            Master the absolute fundamentals of programming, starting with core concepts, data types, and basic I/O. Progress through control flow, loops, functions, and mathematical patterns to build strong logic. Finally, establish a solid foundation in essential beginner structures and techniques like arrays, strings, hashing, sorting, and recursion.
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[3].subtitle}</h1>
+          <p className="text-[#888] text-sm leading-relaxed font-medium">{cardInfo[3].desc}</p>
         </div>
 
         {/* STATS AREA */}
@@ -67,7 +66,7 @@ export default function ProblemExplorer() {
           </div>
           <div className="pt-4 sm:pt-0 sm:pl-6 border-t sm:border-t-0 sm:border-l border-[#2a2a2a] flex justify-between sm:flex-col items-center sm:items-center">
             <span className="text-[10px] text-[#555] font-black uppercase sm:hidden">Total</span>
-            <span className="text-2xl font-bold text-white leading-none">{BasicProblems.length}</span>
+            <span className="text-2xl font-bold text-white leading-none">{problems.length}</span>
             <span className="hidden sm:block text-[9px] text-[#555] font-black uppercase mt-1 tracking-widest text-center">Total</span>
           </div>
         </div>

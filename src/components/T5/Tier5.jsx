@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Tier5Problems } from '../../Data/Tier-5';
+import { cardInfo } from '../../data';
 
 // --- SUB-COMPONENT: STAT BAR ---
 const StatBar = ({ label, solved, total, color }) => {
@@ -52,13 +53,11 @@ export default function ProblemExplorer() {
       {/* HEADER SECTION */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
         <div className="max-w-xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">Tier - 5</h1>
-          <p className="text-[#888] text-sm leading-relaxed font-medium">
-            Transition from basic syntax to core problem-solving by mastering essential algorithms for arrays, strings, and mathematical logic. Build a strong grasp of fundamental sorting and searching techniques, including binary search. Finally, develop hands-on proficiency with classic linear data structures like Linked Lists, Stacks, and Queues.
-          </p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[1].subtitle}</h1>
+          <p className="text-[#888] text-sm leading-relaxed font-medium">{cardInfo[1].desc}</p>
         </div>
 
-        {/* STATS AREA - Now responsive grid */}
+        {/* STATS AREA */}
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:flex sm:items-center gap-4 md:gap-6 bg-[#141516] p-4 md:p-5 rounded-2xl border border-[#2a2a2a] shadow-2xl w-full lg:w-auto">
           <div className="grid grid-cols-1 sm:flex gap-4 sm:gap-6 flex-1">
             <StatBar label="Easy" solved={solvedCount.easy} total={problemCounts.easy} color="#48D2A0" />
@@ -87,7 +86,6 @@ export default function ProblemExplorer() {
         </div>
         <div className="flex gap-2 w-full sm:w-auto overflow-x-auto no-scrollbar py-1">
           {['Easy', 'Medium', 'Hard'].map(filter => {
-            // Check if this specific button is the one currently selected
             const isActive = activeFilter === filter;
 
             
@@ -111,7 +109,7 @@ export default function ProblemExplorer() {
       {/* THE PROBLEM MATRIX CONTAINER */}
       <div className="rounded-[24px] md:rounded-[28px] bg-[#1a1c1d] border border-[#2a2a2a] shadow-2xl overflow-hidden">
 
-        {/* DESKTOP TABLE VIEW (Hidden on Mobile) */}
+        {/* DESKTOP TABLE VIEW */}
         <div className="hidden md:block">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -161,9 +159,9 @@ export default function ProblemExplorer() {
           </table>
         </div>
 
-        {/* MOBILE CARD VIEW (Hidden on Desktop) */}
+        {/* MOBILE CARD VIEW */}
         <div className="md:hidden flex flex-col divide-y divide-[#2a2a2a]/50">
-          {problems.map((prob, index) => (
+          {filteredProblems.map((prob, index) => (
             <div key={index} className="p-5 flex flex-col gap-4 hover:bg-[#202224] transition-colors active:bg-[#202224]">
               <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-1">
