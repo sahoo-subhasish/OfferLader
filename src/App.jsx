@@ -1,12 +1,14 @@
 import React from 'react';
 import LoginBtn from './components/LoginBtn';
-import Card from './components/Card';
-import { cardInfo } from './data';
 import HomeBtn from './components/HomeBtn';
 import ContestBtn from './components/ContestBtn';
+import Home from './components/Home/Home';
+import Contests from './components/Contests/Contests';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
+    <BrowserRouter>
     <div className="flex h-screen w-full bg-[#0E0E0E] text-white font-sans overflow-hidden">
       
       {/* Narrow Sidebar Section */}
@@ -34,31 +36,18 @@ function App() {
       <main className="flex-1 bg-[#111111] p-8 overflow-y-auto">
         {/* THIS LINE CHANGED: from max-w-[1100px] to w-full */}
         <div className="w-full flex flex-col gap-10">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/contests" element={<Contests />} />
+          </Routes>
           
-          {/* CATEGORIES SECTION */}
-          <section>
-            <h1 className="text-xl font-bold text-white mb-5">Categories</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              
-              {
-                cardInfo.map((card, index) => (
-                  <Card
-                  key = {index}
-                  title={card.title}
-                  subtitle={card.subtitle}
-                  bgColor={card.bgColor}
-                  desc={card.desc}
-                />
-                ))
-              }
-
-            </div>
-          </section>
 
         </div>
       </main>
       
     </div>
+    </BrowserRouter>
   );
 }
 
