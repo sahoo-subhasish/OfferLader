@@ -4,14 +4,9 @@ import HomeBtn from './components/HomeBtn';
 import ContestBtn from './components/ContestBtn';
 import Home from './components/Home/Home';
 import Contests from './components/Contests/Contests';
-import Basic from './components/Basic/Basic';
-import Tier5 from './components/T5/Tier5';
-import Tier4 from './components/T4/Tier4';
-import Tier3 from './components/T3/Tier3';
-import Tier2 from './components/T2/Tier2';
-import Tier1 from './components/T1/Tier1';
-import Master from './components/Master/MasterSet';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ProblemExplorer from './components/ProblemExplorer';
+import { AllTierData } from './Data/index';
 
 function App() {
   return (
@@ -44,13 +39,13 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/contests" element={<Contests />} />
-            <Route path="/basic" element={<Basic />} />
-            <Route path="/tier5" element={<Tier5 />} />
-            <Route path="/tier4" element={<Tier4 />} />
-            <Route path="/tier3" element={<Tier3 />} />
-            <Route path="/tier2" element={<Tier2 />} />
-            <Route path="/tier1" element={<Tier1 />} />
-            <Route path="/master" element={<Master />} />
+            <Route path="/basic" element={<ProblemExplorer problemSet={AllTierData.basic.data} infoIndex={AllTierData.basic.infoIndex} />} />
+            <Route path="/tier5" element={<ProblemExplorer problemSet={AllTierData.tier5.data} infoIndex={AllTierData.tier5.infoIndex} />} />
+            <Route path="/tier4" element={<ProblemExplorer problemSet={AllTierData.tier4.data} infoIndex={AllTierData.tier4.infoIndex} />} />
+            <Route path="/tier3" element={<ProblemExplorer problemSet={AllTierData.tier3.data} infoIndex={AllTierData.tier3.infoIndex} />} />
+            <Route path="/tier2" element={<ProblemExplorer problemSet={AllTierData.tier2.data} infoIndex={AllTierData.tier2.infoIndex} />} />
+            <Route path="/tier1" element={<ProblemExplorer problemSet={AllTierData.tier1.data} infoIndex={AllTierData.tier1.infoIndex} />} />
+            <Route path="/master" element={<ProblemExplorer problemSet={AllTierData.master.data} infoIndex={AllTierData.master.infoIndex} />} />
           </Routes>
           
 

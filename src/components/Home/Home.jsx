@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../Card';
-import { cardInfo } from '../../data';
+import { cardInfo } from '../../Data/data';
 import { Link } from 'react-router-dom';
 
 export default function Home(){

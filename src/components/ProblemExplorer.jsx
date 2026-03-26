@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Tier4Problems } from '../../Data/Tier-4';
-import { cardInfo } from '../../data';
+import { cardInfo } from '../Data/data';
 
 // --- SUB-COMPONENT: STAT BAR ---
 const StatBar = ({ label, solved, total, color }) => {
@@ -22,9 +21,9 @@ const StatBar = ({ label, solved, total, color }) => {
 };
 
 
-export default function ProblemExplorer() {
+export default function ProblemExplorer({problemSet, infoIndex}) {
   const [activeFilter, setActiveFilter] = useState(null);
-  const [problems, setProblems] = useState(Tier4Problems);
+  const [problems, setProblems] = useState(problemSet);
 
             const toggleSolved = (id) => {
               setProblems(prev => prev.map((prob) => prob.id === id ? {...prob, isSolved: !prob.isSolved} : prob))
@@ -53,8 +52,8 @@ export default function ProblemExplorer() {
       {/* HEADER SECTION */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
         <div className="max-w-xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[2].subtitle}</h1>
-          <p className="text-[#888] text-sm leading-relaxed font-medium">{cardInfo[2].desc}</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[infoIndex].subtitle}</h1>
+          <p className="text-[#888] text-sm leading-relaxed font-medium">{cardInfo[infoIndex].desc}</p>
         </div>
 
         {/* STATS AREA */}
