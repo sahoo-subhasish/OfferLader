@@ -8,16 +8,16 @@ export default function Login() {
 const handleGoogleLogin = () => {
     account.createOAuth2Session(
         'google', 
-        'http://localhost:5173/home', 
-        'http://localhost:5173/login'  
+        `${window.location.origin}/home`,
+        `${window.location.origin}/login`
     );
 };
 
   const handleLinkedInLogin = () => {
     account.createOAuth2Session(
         'linkedin', 
-        'http://localhost:5173/home',  
-        'http://localhost:5173/login'   
+        `${window.location.origin}/home`, 
+        `${window.location.origin}/login` 
     );
 };
 
