@@ -19,7 +19,7 @@ export const BasicProblems = [
         id: "bgn-03",
         title : "If-Else",
         topic : "Control Flow",
-        difficulty : "Medium",
+        difficulty : "Easy",
         isSolved : false,
         link : "https://www.hackerrank.com/challenges/c-tutorial-conditional-if-else/problem"
     },
@@ -27,7 +27,7 @@ export const BasicProblems = [
         id: "bgn-04",
         title : "Loops",
         topic : "Control Flow",
-        difficulty : "Hard",
+        difficulty : "Easy",
         isSolved : false,
         link : "https://www.hackerrank.com/challenges/c-tutorial-for-loop/problem"
     },

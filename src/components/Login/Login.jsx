@@ -1,17 +1,27 @@
-import React, { use } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { account } from '../../appwrite/config';
 
 export default function Login() {
-  const navigate = useNavigate();
-  const handleGoogleLogin = () => {
-    
-    navigate('/home');
-  };
+
+  
+
+const handleGoogleLogin = () => {
+    account.createOAuth2Session(
+        'google', 
+        'http://localhost:5173/home', 
+        'http://localhost:5173/login'  
+    );
+};
 
   const handleLinkedInLogin = () => {
-    
-    
-  };
+    account.createOAuth2Session(
+        'linkedin', 
+        'http://localhost:5173/home',  
+        'http://localhost:5173/login'   
+    );
+};
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-[#0E0E0E] text-white font-sans w-full">

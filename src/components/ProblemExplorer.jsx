@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cardInfo } from '../Data/data';
+import { databases, ID, Query } from '../appwrite/config';
+import { useAuth } from '../context/AuthContext';
 
 // --- SUB-COMPONENT: STAT BAR ---
 const StatBar = ({ label, solved, total, color }) => {
-  const percentage = (solved / total) * 100;
+  const percentage = total === 0 ? 0 : (solved / total) * 100;
   return (
     <div className="flex flex-col gap-1 w-full lg:w-28">
       <div className="flex justify-between items-center px-1">
@@ -21,20 +23,108 @@ const StatBar = ({ label, solved, total, color }) => {
 };
 
 
-export default function ProblemExplorer({problemSet, infoIndex}) {
+export default function ProblemExplorer({ problemSet, infoIndex }) {
   const [activeFilter, setActiveFilter] = useState(null);
-  const [problems, setProblems] = useState(problemSet);
-
-            const toggleSolved = (id) => {
-              setProblems(prev => prev.map((prob) => prob.id === id ? {...prob, isSolved: !prob.isSolved} : prob))
-            }
-
   const [searchTerm, setSearchTerm] = useState("");
+  const [problems, setProblems] = useState(problemSet);
+  
+  const { user } = useAuth(); 
+
+
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!user) return; 
+
+      try {
+        const response = await databases.listDocuments(
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+          [Query.equal('userId', user.$id)]
+        );
+
+        const savedProgress = response.documents;
+
+
+        setProblems(prev => prev.map(prob => {
+          const match = savedProgress.find(doc => doc.problemId === prob.id);
+          return match ? { ...prob, isSolved: match.isSolved } : prob;
+        }));
+      } catch (error) {
+        console.error("Error fetching user progress:", error);
+      }
+    };
+
+    fetchProgress();
+  }, [user, problemSet]);
+
+
+  const toggleSolved = async (probId) => {
+    if (!user) {
+      alert("Please login with Google to save your progress!");
+      return;
+    }
+
+    const currentProb = problems.find(p => p.id === probId);
+    const newStatus = !currentProb.isSolved;
+  
+    const currentTierName = cardInfo[infoIndex]?.subtitle || "Unknown Tier";
+
+    setProblems(prev => prev.map((prob) => 
+      prob.id === probId ? { ...prob, isSolved: newStatus } : prob
+    ));
+
+    try {
+
+      const existingDocs = await databases.listDocuments(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+        [
+          Query.equal('userId', user.$id),
+          Query.equal('problemId', probId)
+        ]
+      );
+
+      if (existingDocs.total > 0) {
+        
+        const docId = existingDocs.documents[0].$id;
+        await databases.updateDocument(
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+          docId,
+          { isSolved: newStatus }
+        );
+        console.log("Document Updated!");
+      } else {
+      
+        await databases.createDocument(
+          import.meta.env.VITE_APPWRITE_DATABASE_ID,
+          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+          ID.unique(),
+          {
+            userId: user.$id,
+            problemId: probId,
+            isSolved: newStatus,
+            tier: currentTierName 
+          }
+        );
+        console.log("New Document Created!");
+      }
+    } catch (error) {
+      console.error("Error syncing to Appwrite:", error.message);
+    
+      setProblems(prev => prev.map((prob) => 
+        prob.id === probId ? { ...prob, isSolved: !newStatus } : prob
+      ));
+    }
+  };
+
+  // --- FILTER & STATS LOGIC ---
   const filteredProblems = problems.filter((prob) => {
     const matchesDifficulty = activeFilter ? prob.difficulty === activeFilter : true;
     const matchesSearch = prob.title.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesDifficulty && matchesSearch;
   });
+
   const solvedCount = {
     easy: problems.filter(p => p.difficulty === "Easy" && p.isSolved).length,
     medium: problems.filter(p => p.difficulty === "Medium" && p.isSolved).length,
@@ -46,6 +136,7 @@ export default function ProblemExplorer({problemSet, infoIndex}) {
     medium: problems.filter(p => p.difficulty === "Medium").length,
     hard: problems.filter(p => p.difficulty === "Hard").length
   }
+
   return (
     <div className="flex flex-col gap-6 md:gap-8 animate-in fade-in duration-500 max-w-[1200px] mx-auto p-4 md:p-6 mb-20">
 
@@ -86,16 +177,13 @@ export default function ProblemExplorer({problemSet, infoIndex}) {
         <div className="flex gap-2 w-full sm:w-auto overflow-x-auto no-scrollbar py-1">
           {['Easy', 'Medium', 'Hard'].map(filter => {
             const isActive = activeFilter === filter;
-
-            
-
             return (
               <button
                 key={filter}
                 onClick={() => setActiveFilter(isActive ? null : filter)}
                 className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all duration-200 border ${isActive
-                    ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.2)]' // Active Styles
-                    : 'bg-[#141516] border-[#2a2a2a] text-[#777] hover:text-white hover:border-[#444]' // Inactive Styles
+                    ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.2)]' 
+                    : 'bg-[#141516] border-[#2a2a2a] text-[#777] hover:text-white hover:border-[#444]' 
                   }`}
               >
                 {filter}
@@ -183,11 +271,19 @@ export default function ProblemExplorer({problemSet, infoIndex}) {
                       onChange={() => toggleSolved(prob.id)}
                       className="w-5 h-5 cursor-pointer rounded border-2 border-[#2a2a2a] bg-transparent appearance-none checked:bg-[#48D2A0] checked:border-[#48D2A0] transition-all relative"
                     />
-                  <span className="text-[10px] font-bold text-[#555] uppercase">Status</span>
+                  <span className={`text-[10px] font-bold uppercase ${prob.isSolved ? 'text-[#48D2A0]' : 'text-[#555]'}`}>
+                    {prob.isSolved ? 'Solved' : 'Status'}
+                  </span>
                 </div>
-                <button className="text-[10px] font-black text-white bg-[#2a2a2a] px-5 py-2 rounded-lg active:scale-95 transition-transform">
+            
+                <a 
+                  href={prob.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] font-black text-white bg-[#2a2a2a] px-5 py-2 rounded-lg active:scale-95 transition-transform text-center"
+                >
                   SOLVE
-                </button>
+                </a>
               </div>
             </div>
           ))}

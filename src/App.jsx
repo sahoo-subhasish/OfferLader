@@ -1,6 +1,6 @@
 import React from 'react';
 import LandingPage from './components/LandingPage/LandingPage';
-import LoginBtn from './components/LoginBtn';
+import LogOutBtn from './components/LoginBtn';
 import HomeBtn from './components/HomeBtn';
 import ContestBtn from './components/ContestBtn';
 import Home from './components/Home/Home';
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
           <ContestBtn />
         </div>
 
-        <LoginBtn />
+        <LogOutBtn />
       </aside>
 
       <main className="flex-1 bg-[#111111] p-8 overflow-y-auto">
