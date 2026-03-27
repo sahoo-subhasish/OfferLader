@@ -5,51 +5,59 @@ import HomeBtn from './components/HomeBtn';
 import ContestBtn from './components/ContestBtn';
 import Home from './components/Home/Home';
 import Contests from './components/Contests/Contests';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes, Navigate } from 'react-router-dom';
 import ProblemExplorer from './components/ProblemExplorer';
 import { AllTierData } from './Data/index';
 import Login from './components/Login/Login';
+import { useAuth } from './context/AuthContext';
 
 const DashboardLayout = () => {
   return (
     <div className="flex h-screen w-full bg-[#0E0E0E] text-white font-sans overflow-hidden">
-
       {/* Sidebar Section */}
       <aside className="flex w-[80px] flex-col items-center border-r border-[#2a2a2a] bg-[#141414] py-6 z-10 flex-shrink-0">
-
-        {/* Logo */}
         <div className="mb-10 flex items-center justify-center">
           <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
         </div>
-
-        {/* Navigation Links */}
         <div className="flex flex-col items-center gap-6 w-full">
-
           <HomeBtn />
           <ContestBtn />
         </div>
-
         <LogOutBtn />
       </aside>
 
       <main className="flex-1 bg-[#111111] p-8 overflow-y-auto">
-
         <div className="w-full flex flex-col gap-10">
           <Outlet />
         </div>
       </main>
     </div>
-
-      )
+  );
 };
 
-      function App() {
+function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="h-screen w-full bg-[#0E0E0E] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
+      </div>
+    );
+  }
+
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<DashboardLayout />}>
+    <BrowserRouter>
+      <Routes>
+        <Route 
+          path="/" 
+          element={user ? <Navigate to="/home" replace /> : <LandingPage />} 
+        />
+        <Route 
+          path="/login" 
+          element={user ? <Navigate to="/home" replace /> : <Login />} 
+        />
+        <Route element={user ? <DashboardLayout /> : <Navigate to="/login" replace />}>
           <Route path="/home" element={<Home />} />
           <Route path="/contests" element={<Contests />} />
           <Route path="/basic" element={<ProblemExplorer problemSet={AllTierData.basic.data} infoIndex={AllTierData.basic.infoIndex} />} />
@@ -60,8 +68,8 @@ const DashboardLayout = () => {
           <Route path="/tier1" element={<ProblemExplorer problemSet={AllTierData.tier1.data} infoIndex={AllTierData.tier1.infoIndex} />} />
           <Route path="/master" element={<ProblemExplorer problemSet={AllTierData.master.data} infoIndex={AllTierData.master.infoIndex} />} />
         </Route>
-        </Routes>
-    </BrowserRouter >
+      </Routes>
+    </BrowserRouter>
   );
 }
 
