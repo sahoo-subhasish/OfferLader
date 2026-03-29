@@ -48,7 +48,7 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         const savedProgress = response.documents;
 
 
-        setProblems(prev => prev.map(prob => {
+        setProblems(problemSet.map(prob => {
           const match = savedProgress.find(doc => doc.problemId === prob.id);
           return match ? { ...prob, isSolved: match.isSolved } : prob;
         }));
@@ -57,6 +57,7 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
       }
     };
 
+    setProblems(problemSet);
     fetchProgress();
   }, [user, problemSet]);
 
