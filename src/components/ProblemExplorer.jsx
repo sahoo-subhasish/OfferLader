@@ -41,7 +41,8 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         const response = await databases.listDocuments(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
           import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          [Query.equal('userId', user.$id),
+          [
+            Query.equal('userId', user.$id),
             Query.limit(5000)
           ]
         );
@@ -57,7 +58,7 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         console.error("Error fetching user progress:", error);
       }
     };
-    
+
     setProblems(problemSet);
     fetchProgress();
   }, [user, problemSet]);
