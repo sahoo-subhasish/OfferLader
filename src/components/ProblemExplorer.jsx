@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { cardInfo } from '../Data/data';
 import { databases, ID, Query } from '../appwrite/config';
 import { useAuth } from '../context/AuthContext';
+import StrategyBtn from './StrategyBtn';
 
 // --- SUB-COMPONENT: STAT BAR ---
 const StatBar = ({ label, solved, total, color }) => {
@@ -27,6 +28,7 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
   const [activeFilter, setActiveFilter] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [problems, setProblems] = useState(problemSet);
+
   
   const { user } = useAuth(); 
 
@@ -39,13 +41,15 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         const response = await databases.listDocuments(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
           import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          [Query.equal('userId', user.$id)]
+          [Query.equal('userId', user.$id),
+            Query.limit(5000)
+          ]
         );
 
         const savedProgress = response.documents;
 
 
-        setProblems(prev => prev.map(prob => {
+        setProblems(problemSet.map(prob => {
           const match = savedProgress.find(doc => doc.problemId === prob.id);
           return match ? { ...prob, isSolved: match.isSolved } : prob;
         }));
@@ -53,7 +57,8 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         console.error("Error fetching user progress:", error);
       }
     };
-
+    
+    setProblems(problemSet);
     fetchProgress();
   }, [user, problemSet]);
 
@@ -80,7 +85,8 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         import.meta.env.VITE_APPWRITE_COLLECTION_ID,
         [
           Query.equal('userId', user.$id),
-          Query.equal('problemId', probId)
+          Query.equal('problemId', probId),
+          
         ]
       );
 
@@ -142,9 +148,10 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
 
       {/* HEADER SECTION */}
       <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
-        <div className="max-w-xl">
+        <div className="max-w-xl flex flex-col items-start">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[infoIndex].subtitle}</h1>
-          <p className="text-[#888] text-sm leading-relaxed font-medium">{cardInfo[infoIndex].desc}</p>
+          <p className="text-[#888] text-sm leading-relaxed font-medium mb-6">{cardInfo[infoIndex].desc}</p>
+          <StrategyBtn infoIndex={cardInfo[infoIndex]} />
         </div>
 
         {/* STATS AREA */}

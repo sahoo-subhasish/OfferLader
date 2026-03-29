@@ -12,7 +12,7 @@ export default function LogOutBtn() {
   };
 
   return (
-    <div className="mt-auto pb-2 relative">
+    <div className="relative flex-shrink-0 md:mt-4">
       <button
         onClick={handleLogout} 
         className="flex flex-col items-center gap-1 group"
