@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { cardInfo } from '../Data/data';
-import { databases, ID, Query } from '../appwrite/config';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase';
 import { useAuth } from '../context/AuthContext';
 import StrategyBtn from './StrategyBtn';
 
@@ -38,21 +39,16 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
       if (!user) return; 
 
       try {
-        const response = await databases.listDocuments(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          [
-            Query.equal('userId', user.$id),
-            Query.limit(5000)
-          ]
-        );
+        const userDocRef = doc(firestore, 'users', user.uid);
+        const docSnap = await getDoc(userDocRef);
 
-        const savedProgress = response.documents;
-
+        let solvedProblems = {};
+        if (docSnap.exists()) {
+          solvedProblems = docSnap.data().solvedProblems || {};
+        }
 
         setProblems(problemSet.map(prob => {
-          const match = savedProgress.find(doc => doc.problemId === prob.id);
-          return match ? { ...prob, isSolved: match.isSolved } : prob;
+          return { ...prob, isSolved: !!solvedProblems[prob.id] };
         }));
       } catch (error) {
         console.error("Error fetching user progress:", error);
@@ -73,51 +69,22 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
     const currentProb = problems.find(p => p.id === probId);
     const newStatus = !currentProb.isSolved;
   
-    const currentTierName = cardInfo[infoIndex]?.subtitle || "Unknown Tier";
-
     setProblems(prev => prev.map((prob) => 
       prob.id === probId ? { ...prob, isSolved: newStatus } : prob
     ));
 
     try {
-
-      const existingDocs = await databases.listDocuments(
-        import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-        [
-          Query.equal('userId', user.$id),
-          Query.equal('problemId', probId),
-          
-        ]
-      );
-
-      if (existingDocs.total > 0) {
-        
-        const docId = existingDocs.documents[0].$id;
-        await databases.updateDocument(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          docId,
-          { isSolved: newStatus }
-        );
-        console.log("Document Updated!");
-      } else {
+      const userDocRef = doc(firestore, 'users', user.uid);
       
-        await databases.createDocument(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-          ID.unique(),
-          {
-            userId: user.$id,
-            problemId: probId,
-            isSolved: newStatus,
-            tier: currentTierName 
-          }
-        );
-        console.log("New Document Created!");
-      }
+      await setDoc(userDocRef, {
+        solvedProblems: {
+          [probId]: newStatus
+        }
+      }, { merge: true });
+
+      console.log("Progress synced!");
     } catch (error) {
-      console.error("Error syncing to Appwrite:", error.message);
+      console.error("Error syncing to Firestore:", error.message);
     
       setProblems(prev => prev.map((prob) => 
         prob.id === probId ? { ...prob, isSolved: !newStatus } : prob
