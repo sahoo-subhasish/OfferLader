@@ -25,7 +25,7 @@ export default function StrategyBtn({ infoIndex }) {
                 onClick={() => setIsOverlayOpen(true)}
                 className="w-fit flex items-center gap-2 px-6 py-2 bg-[#1a1c1d] border border-[#2a2a2a] rounded-xl text-sm font-bold hover:border-[#48D2A0] transition-all active:scale-95 text-white"
             >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2L2 7l10 5 10-5-10-5z" />
                     <path d="M2 17l10 5 10-5" />
                     <path d="M2 12l10 5 10-5" />
