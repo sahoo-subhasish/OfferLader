@@ -7,7 +7,6 @@ import { Tier2Problems } from './Tier-2';
 import { Tier1Problems } from './Tier-1';
 import { MasterProblems } from './Master';
 
-// We map these to an object so we can access them by a simple key
 export const AllTierData = {
   basic: { data: BasicProblems, infoIndex: 0 },
   tier5: { data: Tier5Problems, infoIndex: 1 },

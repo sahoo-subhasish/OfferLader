@@ -25,7 +25,7 @@ const StatBar = ({ label, solved, total, color }) => {
 };
 
 
-export default function ProblemExplorer({ problemSet, infoIndex }) {
+export default function ProblemExplorer({ problemSet, infoIndex,info }) {
   const [activeFilter, setActiveFilter] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [problems, setProblems] = useState(problemSet);
@@ -119,7 +119,7 @@ export default function ProblemExplorer({ problemSet, infoIndex }) {
         <div className="max-w-xl flex flex-col items-start">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tighter">{cardInfo[infoIndex].subtitle}</h1>
           <p className="text-[#888] text-sm leading-relaxed font-medium mb-6">{cardInfo[infoIndex].desc}</p>
-          <StrategyBtn infoIndex={cardInfo[infoIndex]} />
+          <StrategyBtn info={info} />
         </div>
 
         {/* STATS AREA */}

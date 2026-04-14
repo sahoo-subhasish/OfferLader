@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function StrategyBtn({ infoIndex }) {
+export default function StrategyBtn({ info }) {
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
 
     const renderStrategyText = (text) => {
@@ -45,7 +45,7 @@ export default function StrategyBtn({ infoIndex }) {
                     {/* Modal Content */}
                     <div className="glass-card relative z-10 w-full max-w-2xl p-8 rounded-[32px] border border-[#2a2a2a] bg-[#0E0E0E] shadow-2xl flex flex-col max-h-[85vh]">
                         <div className="flex justify-between items-center mb-6 shrink-0">
-                            <h2 className="text-2xl font-bold text-gradient">{infoIndex.title} Strategy</h2>
+                            <h2 className="text-2xl font-bold text-gradient">{info.title} Strategy</h2>
                             <button
                                 onClick={() => setIsOverlayOpen(false)}
                                 className="p-2 hover:bg-white/10 rounded-full transition-colors"
@@ -55,7 +55,7 @@ export default function StrategyBtn({ infoIndex }) {
                         </div>
 
                         <div className="text-[#aaa] leading-relaxed space-y-4 overflow-y-auto pr-2 custom-scrollbar">
-                            <p className="whitespace-pre-wrap">{renderStrategyText(infoIndex.strategy)}</p>
+                            <p className="whitespace-pre-wrap">{renderStrategyText(info.instruction)}</p>
                         </div>
                     </div>
                 </div>
