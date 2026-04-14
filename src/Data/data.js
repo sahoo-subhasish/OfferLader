@@ -19,7 +19,8 @@ export const cardInfo = [
         path: "/tier5",
         points: [
             "Arrays, strings, math problems",
-            "Sorting and binary search",
+            "Sorting",
+            "binary search",
             "Linked Lists, Stacks, Queues"
         ],
         desc : "Transition from basic syntax to core problem-solving by mastering essential algorithms for arrays, strings, and mathematical logic. Build a strong grasp of fundamental sorting and searching techniques, including binary search. Finally, develop hands-on proficiency with classic linear data structures like Linked Lists, Stacks, and Queues."
