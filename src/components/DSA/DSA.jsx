@@ -18,7 +18,7 @@ export default function DSA(){
                   title={card.title}
                   subtitle={card.subtitle}
                   bgColor={card.bgColor}
-                  desc={card.desc}
+                  points={card.points}
                 />
                 </Link>
                 ))

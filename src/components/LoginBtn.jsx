@@ -12,18 +12,16 @@ export default function LogOutBtn() {
   };
 
   return (
-    <div className="relative flex-shrink-0 md:mt-4">
+    <div className="relative flex-shrink-0 w-full px-2">
       <button
         onClick={handleLogout} 
-        className="flex flex-col items-center gap-1 group"
+        className="flex flex-row items-center gap-4 w-full px-4 py-3 rounded-xl transition-all group text-[#888] hover:bg-[#1a1a1a] hover:text-white"
       >
-        <div className="rounded-full bg-[#2a2a2a] p-2 text-[#888] transition-all group-hover:text-white hover:bg-[#333]">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        </div>
-        <span className="text-[10px] font-medium text-[#888] group-hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span className="text-sm font-medium transition-colors">
           Logout
         </span>
       </button>
