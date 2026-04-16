@@ -3,7 +3,7 @@ export const cardInfo = [
         title: "Basics",
         subtitle: "Beginner",
         bgColor: "#9A4FEB",
-        path: "/basic",
+        path: "basic",
         points: [
             "Core concepts, data types, basic I/O",
             "Control flow, loops, and functions",
@@ -16,7 +16,7 @@ export const cardInfo = [
         title: "3-6 LPA",
         subtitle: "Tier-5",
         bgColor: "#508EFF",
-        path: "/tier5",
+        path: "tier5",
         points: [
             "Arrays, strings, math problems",
             "Sorting",
@@ -29,7 +29,7 @@ export const cardInfo = [
         title: "6-9 LPA",
         subtitle: "Tier-4",
         bgColor: "#FF716C",
-        path: "/tier4",
+        path: "tier4",
         points: [
             "Binary Trees, BSTs, traversals",
             "Graph basics (BFS, DFS)",
@@ -42,7 +42,7 @@ export const cardInfo = [
         title: "9-12 LPA",
         subtitle: "Tier-3",
         bgColor: "#F6B846",
-        path: "/tier3",
+        path: "tier3",
         points: [
             "Advanced recursion & backtracking",
             "Binary search on answers",
@@ -55,7 +55,7 @@ export const cardInfo = [
         title: "12-18 LPA",
         subtitle: "Tier-2",
         bgColor: "#48D2A0",
-        path: "/tier2",
+        path: "tier2",
         points: [
             "Advanced Dynamic Programming",
             "Graph algorithms (shortest path, MST)",
@@ -68,7 +68,7 @@ export const cardInfo = [
         title: "FAANG+",
         subtitle: "Tier-1",
         bgColor: "#F378A5",
-        path: "/tier1",
+        path: "tier1",
         points: [
             "Hard DP (multi-dimensional)",
             "Advanced graph theory",
@@ -81,7 +81,7 @@ export const cardInfo = [
         title: "MASTER SET",
         subtitle: "Master",
         bgColor: "#B084E9",
-        path: "/master",
+        path: "master",
         points: [
             "Complete A–Z DSA roadmap",
             "Beginner to advanced progression",
@@ -94,7 +94,7 @@ export const cardInfo = [
         title: "A2Z SHEET",
         subtitle: "Striver Sheet",
         bgColor: "#EA763F",
-        path: "/a2z",
+        path: "a2z",
         points: [
             "Structured beginner roadmap",
             "Arrays, strings, hashing",

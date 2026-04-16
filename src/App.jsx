@@ -19,6 +19,7 @@ import DSA from './components/DSA/DSA';
 import CSFunds from './components/CSFunds';
 import { instructions } from './Data/Instructions';
 import BlogsBtn from './components/BlogsBtn';
+import DSAOutlet from './components/DSA/DSAOutlet';
 
 
 const DashboardLayout = () => {
@@ -29,8 +30,8 @@ const DashboardLayout = () => {
       {/* Mobile Header with Hamburger */}
       <div className="md:hidden flex items-center justify-between px-6 border-b border-[#2a2a2a] bg-[#141414] h-[60px] flex-shrink-0 z-50">
         <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
-        <button 
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-white p-2 focus:outline-none"
         >
           {isMobileMenuOpen ? (
@@ -60,9 +61,9 @@ const DashboardLayout = () => {
           <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
           <span className="text-white font-bold text-lg tracking-wide">OfferLadder</span>
         </div>
-        
+
         {/* Navigation Wrapper */}
-        <div 
+        <div
           className="flex flex-col items-stretch justify-start gap-2 w-full flex-1 overflow-hidden px-4 md:px-4 pt-4 md:pt-0"
           onClickCapture={() => setIsMobileMenuOpen(false)}
         >
@@ -119,20 +120,26 @@ function App() {
 
         <Route element={user ? <DashboardLayout /> : <Navigate to="/login" replace />}>
           <Route path="/home" element={<Contests />} />
-          <Route path="/DSA" element={<DSA />} />
+          <Route path="/DSA" element={<DSAOutlet />} >
+
+            {/* THIS LINE FIXES YOUR ISSUE */}
+            <Route index element={<DSA />} />
+
+            <Route path="basic" element={<ProblemExplorer problemSet={AllTierData.basic.data} infoIndex={AllTierData.basic.infoIndex} info={instructions[0]} />} />
+            <Route path="tier5" element={<ProblemExplorer problemSet={AllTierData.tier5.data} infoIndex={AllTierData.tier5.infoIndex} info={instructions[1]} />} />
+            <Route path="tier4" element={<ProblemExplorer problemSet={AllTierData.tier4.data} infoIndex={AllTierData.tier4.infoIndex} info={instructions[2]} />} />
+            <Route path="tier3" element={<ProblemExplorer problemSet={AllTierData.tier3.data} infoIndex={AllTierData.tier3.infoIndex} info={instructions[3]} />} />
+            <Route path="tier2" element={<ProblemExplorer problemSet={AllTierData.tier2.data} infoIndex={AllTierData.tier2.infoIndex} info={instructions[4]} />} />
+            <Route path="tier1" element={<ProblemExplorer problemSet={AllTierData.tier1.data} infoIndex={AllTierData.tier1.infoIndex} info={instructions[5]} />} />
+            <Route path="master" element={<ProblemExplorer problemSet={AllTierData.master.data} infoIndex={AllTierData.master.infoIndex} info={instructions[6]} />} />
+
+          </Route>
           <Route path="/contests" element={<Contests />} />
           <Route path="/dsaVsDev" element={<Contests />} />
           <Route path="/computerFundamentals" element={<CSFunds />} />
           <Route path="/aptitude" element={<Contests />} />
           <Route path="/effectiveCommunication" element={<Contests />} />
           <Route path="/blogs" element={<Contests />} />
-          <Route path="/basic" element={<ProblemExplorer problemSet={AllTierData.basic.data} infoIndex={AllTierData.basic.infoIndex} info={instructions[0]}/>} />
-          <Route path="/tier5" element={<ProblemExplorer problemSet={AllTierData.tier5.data} infoIndex={AllTierData.tier5.infoIndex} info={instructions[1]}/>} />
-          <Route path="/tier4" element={<ProblemExplorer problemSet={AllTierData.tier4.data} infoIndex={AllTierData.tier4.infoIndex} info={instructions[2]}/>} />
-          <Route path="/tier3" element={<ProblemExplorer problemSet={AllTierData.tier3.data} infoIndex={AllTierData.tier3.infoIndex} info={instructions[3]}/>} />
-          <Route path="/tier2" element={<ProblemExplorer problemSet={AllTierData.tier2.data} infoIndex={AllTierData.tier2.infoIndex} info={instructions[4]}/>} />
-          <Route path="/tier1" element={<ProblemExplorer problemSet={AllTierData.tier1.data} infoIndex={AllTierData.tier1.infoIndex} info={instructions[5]}/>} />
-          <Route path="/master" element={<ProblemExplorer problemSet={AllTierData.master.data} infoIndex={AllTierData.master.infoIndex} info={instructions[6]}/>} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
