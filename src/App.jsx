@@ -122,9 +122,8 @@ function App() {
           <Route path="/home" element={<Contests />} />
           <Route path="/DSA" element={<DSAOutlet />} >
 
-            {/* THIS LINE FIXES YOUR ISSUE */}
             <Route index element={<DSA />} />
-
+            
             <Route path="basic" element={<ProblemExplorer problemSet={AllTierData.basic.data} infoIndex={AllTierData.basic.infoIndex} info={instructions[0]} />} />
             <Route path="tier5" element={<ProblemExplorer problemSet={AllTierData.tier5.data} infoIndex={AllTierData.tier5.infoIndex} info={instructions[1]} />} />
             <Route path="tier4" element={<ProblemExplorer problemSet={AllTierData.tier4.data} infoIndex={AllTierData.tier4.infoIndex} info={instructions[2]} />} />
