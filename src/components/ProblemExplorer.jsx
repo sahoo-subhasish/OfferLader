@@ -25,18 +25,18 @@ const StatBar = ({ label, solved, total, color }) => {
 };
 
 
-export default function ProblemExplorer({ problemSet, infoIndex,info }) {
+export default function ProblemExplorer({ problemSet, infoIndex, info }) {
   const [activeFilter, setActiveFilter] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [problems, setProblems] = useState(problemSet);
 
-  
-  const { user } = useAuth(); 
+
+  const { user } = useAuth();
 
 
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!user) return; 
+      if (!user) return;
 
       try {
         const userDocRef = doc(firestore, 'users', user.uid);
@@ -68,25 +68,27 @@ export default function ProblemExplorer({ problemSet, infoIndex,info }) {
 
     const currentProb = problems.find(p => p.id === probId);
     const newStatus = !currentProb.isSolved;
-  
-    setProblems(prev => prev.map((prob) => 
+
+    setProblems(prev => prev.map((prob) =>
       prob.id === probId ? { ...prob, isSolved: newStatus } : prob
     ));
 
     try {
       const userDocRef = doc(firestore, 'users', user.uid);
-      
+
       await setDoc(userDocRef, {
         solvedProblems: {
           [probId]: newStatus
+            ? { solved: true, date: new Date().toISOString() }
+            : false
         }
       }, { merge: true });
 
       console.log("Progress synced!");
     } catch (error) {
       console.error("Error syncing to Firestore:", error.message);
-    
-      setProblems(prev => prev.map((prob) => 
+
+      setProblems(prev => prev.map((prob) =>
         prob.id === probId ? { ...prob, isSolved: !newStatus } : prob
       ));
     }
@@ -157,8 +159,8 @@ export default function ProblemExplorer({ problemSet, infoIndex,info }) {
                 key={filter}
                 onClick={() => setActiveFilter(isActive ? null : filter)}
                 className={`whitespace-nowrap px-5 py-2 rounded-xl text-xs font-bold transition-all duration-200 border ${isActive
-                    ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.2)]' 
-                    : 'bg-[#141516] border-[#2a2a2a] text-[#777] hover:text-white hover:border-[#444]' 
+                  ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.2)]'
+                  : 'bg-[#141516] border-[#2a2a2a] text-[#777] hover:text-white hover:border-[#444]'
                   }`}
               >
                 {filter}
@@ -202,8 +204,8 @@ export default function ProblemExplorer({ problemSet, infoIndex,info }) {
                   </td>
                   <td className="px-8 py-6">
                     <span className={`text-[10px] font-medium px-3 py-1.5 rounded-full border ${prob.difficulty === 'Easy' ? 'text-[#48D2A0] border-[#48D2A0]/20 bg-[#48D2A0]/5' :
-                        prob.difficulty === 'Medium' ? 'text-[#F6B846] border-[#F6B846]/20 bg-[#F6B846]/5' :
-                          'text-[#FF716C] border-[#FF716C]/20 bg-[#FF716C]/5'
+                      prob.difficulty === 'Medium' ? 'text-[#F6B846] border-[#F6B846]/20 bg-[#F6B846]/5' :
+                        'text-[#FF716C] border-[#FF716C]/20 bg-[#FF716C]/5'
                       }`}>
                       {prob.difficulty.toUpperCase()}
                     </span>
@@ -231,8 +233,8 @@ export default function ProblemExplorer({ problemSet, infoIndex,info }) {
                   <span className="text-[15px] font-bold text-white pr-4">{prob.title}</span>
                 </div>
                 <span className={`text-[9px] font-black px-2 py-1 rounded-md border shrink-0 ${prob.difficulty === 'Easy' ? 'text-[#48D2A0] border-[#48D2A0]/20 bg-[#48D2A0]/5' :
-                    prob.difficulty === 'Medium' ? 'text-[#F6B846] border-[#F6B846]/20 bg-[#F6B846]/5' :
-                      'text-[#FF716C] border-[#FF716C]/20 bg-[#FF716C]/5'
+                  prob.difficulty === 'Medium' ? 'text-[#F6B846] border-[#F6B846]/20 bg-[#F6B846]/5' :
+                    'text-[#FF716C] border-[#FF716C]/20 bg-[#FF716C]/5'
                   }`}>
                   {prob.difficulty.toUpperCase()}
                 </span>
@@ -241,17 +243,17 @@ export default function ProblemExplorer({ problemSet, infoIndex,info }) {
               <div className="flex justify-between items-center pt-2">
                 <div className="flex items-center gap-2">
                   <input
-                      type="checkbox"
-                      checked={prob.isSolved}
-                      onChange={() => toggleSolved(prob.id)}
-                      className="w-5 h-5 cursor-pointer rounded border-2 border-[#2a2a2a] bg-transparent appearance-none checked:bg-[#48D2A0] checked:border-[#48D2A0] transition-all relative"
-                    />
+                    type="checkbox"
+                    checked={prob.isSolved}
+                    onChange={() => toggleSolved(prob.id)}
+                    className="w-5 h-5 cursor-pointer rounded border-2 border-[#2a2a2a] bg-transparent appearance-none checked:bg-[#48D2A0] checked:border-[#48D2A0] transition-all relative"
+                  />
                   <span className={`text-[10px] font-bold uppercase ${prob.isSolved ? 'text-[#48D2A0]' : 'text-[#555]'}`}>
                     {prob.isSolved ? 'Solved' : 'Status'}
                   </span>
                 </div>
-            
-                <a 
+
+                <a
                   href={prob.link}
                   target="_blank"
                   rel="noopener noreferrer"
