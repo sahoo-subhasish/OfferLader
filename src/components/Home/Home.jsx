@@ -136,9 +136,10 @@ export default function Home() {
     const overallPercentage = totalInTier === 0 ? 0 : Math.round((solvedInTier / totalInTier) * 100);
 
     const todayStr = new Date().toDateString();
-    const todaySolved = Object.values(solvedProblems)
+    const rawTodaySolved = Object.values(solvedProblems)
         .filter(val => val && val.solved && val.date && new Date(val.date).toDateString() === todayStr)
         .length;
+    const todaySolved = dailyTarget > 0 ? Math.min(rawTodaySolved, dailyTarget) : rawTodaySolved;
 
     const timeAgo = (dateStr) => {
         const now = new Date();
