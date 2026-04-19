@@ -89,13 +89,7 @@ export default function Contests() {
         const snap = await getDocs(collection(firestore, 'contests'));
         const list = [];
         snap.forEach(d => list.push({ id: d.id, ...d.data() }));
-        list.sort((a, b) => {
-          const order = { live: 0, not_started: 1, ended: 2, unknown: 3 };
-          const sa = getStatus(a.startTime, a.endTime);
-          const sb = getStatus(b.startTime, b.endTime);
-          if (order[sa] !== order[sb]) return order[sa] - order[sb];
-          return new Date(a.startTime) - new Date(b.startTime);
-        });
+        list.sort((a, b) => new Date(b.startTime) - new Date(a.startTime));
         setContests(list);
       } catch (error) {
         console.error("Error fetching contests:", error);
