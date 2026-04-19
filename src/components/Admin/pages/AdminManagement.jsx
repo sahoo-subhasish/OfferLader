@@ -78,13 +78,9 @@ export default function AdminManagement() {
                   <td className="px-6 py-4 text-right">
                     <button
                       onClick={() => toggleRole(u.id, u.role)}
-                      className={`text-sm font-semibold px-4 py-2 rounded-lg transition-transform hover:scale-105 ${
-                        u.role === 'admin' 
-                        ? 'bg-red-500/10 text-red-500 border border-red-500/50' 
-                        : 'bg-[#48D2A0]/10 text-[#48D2A0] border border-[#48D2A0]/50'
-                      }`}
+                      className="inline-flex justify-center items-center text-[10px] font-bold text-white bg-[#2a2a2a] hover:bg-white hover:text-black px-5 py-2.5 rounded-xl transition-all uppercase tracking-widest border border-[#333] hover:border-white active:scale-95"
                     >
-                      {u.role === 'admin' ? 'Revoke Admin' : 'Make Admin'}
+                      {u.role === 'admin' ? 'REVOKE ADMIN' : 'MAKE ADMIN'}
                     </button>
                   </td>
                 </tr>

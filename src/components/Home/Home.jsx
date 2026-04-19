@@ -208,9 +208,8 @@ export default function Home() {
                     <div className="w-11 h-11 rounded-lg border border-[#333] bg-[#222] flex items-center justify-center text-lg font-medium text-white overflow-hidden shrink-0">
                         {user?.photoURL ? (<img src={user?.photoURL} alt="profile" className="w-full h-full object-cover" />) : (user?.displayName?.charAt(0).toUpperCase())}
                     </div>
-                    <div className="flex flex-col min-w-0">
+                    <div className="flex flex-col justify-center min-w-0">
                         <span className="text-sm font-semibold text-white leading-tight truncate">{user?.displayName}</span>
-                        <span className="text-xs text-neutral-500 font-mono mt-0.5 truncate max-w-[180px] sm:max-w-none">UID: {user?.uid}</span>
                     </div>
                 </div>
             </div>

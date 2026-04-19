@@ -112,87 +112,109 @@ export default function BlogDetail() {
   const hasLiked = blog.likes?.includes(user?.uid);
 
   return (
-    <section className="flex flex-col text-white w-full max-w-4xl mx-auto pt-6 pb-20" data-color-mode="dark">
+    <section className="flex flex-col animate-in fade-in duration-500 max-w-[1200px] mx-auto p-4 md:p-6 mb-20 md:pt-12 w-full h-full text-white" data-color-mode="dark">
       
-      <Link to="/blogs" className="flex items-center gap-2 text-[#888] hover:text-white transition-colors mb-6 w-fit">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <Link to="/blogs" className="group flex items-center gap-2 text-neutral-500 hover:text-white transition-all mb-12 w-fit text-sm font-bold tracking-widest uppercase hover:-translate-x-1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>
         Back to Blogs
       </Link>
 
-      <div className="mb-10 text-center">
+      <header className="mb-12 pb-10 border-b border-[#262626]">
         {blog.status === 'draft' && (
-           <div className="inline-block px-3 py-1 bg-[#eab308]/20 text-[#eab308] font-bold text-xs rounded mb-4 tracking-wider">DRAFT PREVIEW</div>
+           <div className="inline-flex items-center px-2.5 py-1 bg-[#eab308]/10 text-[#eab308] border border-[#eab308]/20 font-bold text-[10px] rounded mb-6 tracking-widest uppercase">Draft Preview</div>
         )}
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight tracking-tight text-gradient">{blog.title}</h1>
-        <div className="flex items-center justify-center gap-3 text-sm text-[#888]">
-          <span className="font-semibold text-white">{blog.authorName || 'Admin'}</span>
-          <span>•</span>
-          <span>{new Date(blog.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-[1.15] tracking-tight text-white">{blog.title}</h1>
+        
+        <div className="flex items-center gap-4 text-sm text-neutral-500">
+          <div className="w-12 h-12 rounded-full bg-[#222] border border-[#333] flex items-center justify-center text-base font-bold text-white uppercase shadow-sm">
+            {(blog.authorName || 'A').charAt(0)}
+          </div>
+          <div className="flex flex-col justify-center">
+            <span className="font-semibold text-neutral-200 text-base leading-tight mb-0.5">{blog.authorName || 'Admin'}</span>
+            <div className="flex items-center gap-2 text-[13px] font-medium">
+              <span>{new Date(blog.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+              <span className="w-1 h-1 rounded-full bg-neutral-600"></span>
+              <span>{Math.ceil((blog.content?.length || 100) / 1200)} min ago</span>
+            </div>
+          </div>
         </div>
-      </div>
+      </header>
 
-      <div className="wmde-markdown-var mb-8 rounded-2xl bg-[#0a0a0a] border border-[#2a2a2a] p-6 sm:p-10 shadow-2xl">
+      <div className="wmde-markdown-var mb-16 rounded-xl bg-transparent">
         <MDEditor.Markdown source={blog.content} style={{ backgroundColor: 'transparent' }} />
       </div>
 
-      <div className="flex items-center justify-between border-y border-[#222] py-4 mb-10">
+      <div className="flex items-center justify-between border-y border-[#262626] py-5 mb-16 px-2 sm:px-4">
         <button 
           onClick={handleLike}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
+          className={`group flex items-center gap-3 px-5 py-2.5 rounded-full transition-all font-semibold border ${
             hasLiked 
-            ? 'bg-[#48D2A0]/20 border-[#48D2A0]/50 text-[#48D2A0] shadow-[0_0_15px_rgba(72,210,160,0.2)]' 
-            : 'border-[#333] hover:bg-[#1a1a1a] text-[#888] hover:text-white'
+            ? 'bg-red-500/10 border-red-500/30 text-red-500' 
+            : 'border-transparent hover:border-[#333] hover:bg-[#1a1a1a] text-neutral-400 hover:text-white'
           }`}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={hasLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-          <span className="font-semibold">{blog.likes?.length || 0}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill={hasLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={hasLiked ? 'scale-110 transition-transform' : 'group-hover:scale-110 transition-transform'}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span className="text-sm">{blog.likes?.length || 0} Likes</span>
         </button>
 
-        <div className="flex items-center gap-2 text-[#888] font-medium">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <div className="flex items-center gap-2.5 text-neutral-400 font-medium text-sm pr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
           {comments.length} Comments
         </div>
       </div>
 
       <div className="w-full">
-        <h3 className="text-2xl font-bold mb-6">Comments</h3>
+        <h3 className="text-xl font-bold mb-5 pl-2 border-l-2 border-[#48D2A0] text-white">Discussion</h3>
         
         {/* Post Comment Form */}
         {user ? (
-          <form onSubmit={handlePostComment} className="mb-8 flex flex-col items-end gap-3">
-            <textarea 
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="What are your thoughts?"
-              required
-              rows={3}
-              className="w-full bg-[#111] border border-[#333] rounded-xl p-4 text-white focus:outline-none focus:border-[#48D2A0] resize-y custom-scrollbar"
-            />
-            <button 
-              type="submit" 
-              disabled={commenting || !newComment.trim()}
-              className="bg-[#48D2A0] text-black font-bold py-2.5 px-6 rounded-xl hover:bg-[#3bb589] transition-colors disabled:opacity-50"
-            >
-              {commenting ? 'Posting...' : 'Post Comment'}
-            </button>
+          <form onSubmit={handlePostComment} className="mb-10 flex flex-col gap-3">
+            <div className="w-full bg-[#141414] border border-[#262626] rounded-xl focus-within:border-[#48D2A0] focus-within:ring-1 focus-within:ring-[#48D2A0]/20 transition-all shadow-sm overflow-hidden flex flex-col">
+              <textarea 
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Share your thoughts or ask a question..."
+                required
+                rows={3}
+                className="w-full bg-transparent border-none p-4 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-0 resize-y min-h-[100px] custom-scrollbar"
+              />
+              <div className="flex justify-between items-center px-4 py-2.5 bg-[#1a1a1a] border-t border-[#262626]">
+                <div className="text-[11px] text-neutral-500 font-medium flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    Join the dialogue
+                </div>
+                <button 
+                  type="submit" 
+                  disabled={commenting || !newComment.trim()}
+                  className="inline-flex justify-center items-center text-[10px] font-bold text-white bg-[#2a2a2a] hover:bg-white hover:text-black px-5 py-2 rounded-lg transition-all uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+                >
+                  {commenting ? 'POSTING...' : 'ADD COMMENT'}
+                </button>
+              </div>
+            </div>
           </form>
         ) : (
-          <div className="mb-8 p-4 bg-[#111] border border-[#333] rounded-xl text-[#888] text-center">
-            Please <Link to="/login" className="text-[#48D2A0] hover:underline">Log in</Link> to post a comment.
+          <div className="mb-10 p-5 bg-[#141414] border border-[#262626] shadow-sm rounded-xl text-neutral-400 text-center text-sm font-medium">
+            Please <Link to="/login" className="text-[#48D2A0] hover:text-[#3bb589] hover:underline px-1">Log in</Link> to join the dialogue.
           </div>
         )}
 
         {/* Comments List */}
         <div className="flex flex-col gap-4">
           {comments.length === 0 ? (
-            <p className="text-[#555] italic">No comments yet. Be the first to start the discussion!</p>
+            <div className="p-8 text-center bg-[#141414]/50 border border-[#262626] rounded-xl border-dashed">
+                <p className="text-neutral-500 font-medium text-sm">No comments yet. Be the first to start the discussion!</p>
+            </div>
           ) : comments.map(c => (
-            <div key={c.id} className="p-5 rounded-2xl bg-[#111] border border-[#2a2a2a] flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-[#ccc] text-sm">{c.authorName}</span>
-                <span className="text-xs text-[#555]">{new Date(c.createdAt).toLocaleDateString()}</span>
+            <div key={c.id} className="p-4 sm:p-5 rounded-xl bg-[#141414] border border-[#262626] shadow-sm flex flex-col gap-2 relative">
+              <div className="flex items-center justify-between pb-2 border-b border-[#262626]">
+                <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-md bg-[#222] border border-[#333] flex items-center justify-center text-[10px] font-bold text-white uppercase">{c.authorName?.charAt(0) || 'U'}</div>
+                    <span className="font-semibold text-white text-sm tracking-tight">{c.authorName}</span>
+                </div>
+                <span className="text-[11px] font-mono text-neutral-500">{new Date(c.createdAt).toLocaleDateString()}</span>
               </div>
-              <p className="text-[#eee] text-sm leading-relaxed">{c.text}</p>
+              <p className="text-neutral-300 text-sm leading-relaxed mt-1">{c.text}</p>
             </div>
           ))}
         </div>
