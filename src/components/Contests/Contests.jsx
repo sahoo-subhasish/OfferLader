@@ -348,7 +348,7 @@ export default function Contests() {
 
                     <div className="flex gap-2 pt-1">
                       <a
-                        href={c.link ? `${c.link}/rank` : '#'}
+                        href={c.link ? `${c.link}#rank` : '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 text-center text-[10px] font-bold text-[#888] bg-[#111] border border-[#2a2a2a] py-2 rounded-xl active:scale-95 transition-transform"
