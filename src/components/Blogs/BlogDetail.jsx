@@ -124,20 +124,6 @@ export default function BlogDetail() {
            <div className="inline-flex items-center px-2.5 py-1 bg-[#eab308]/10 text-[#eab308] border border-[#eab308]/20 font-bold text-[10px] rounded mb-6 tracking-widest uppercase">Draft Preview</div>
         )}
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-8 leading-[1.15] tracking-tight text-white">{blog.title}</h1>
-        
-        <div className="flex items-center gap-4 text-sm text-neutral-500">
-          <div className="w-12 h-12 rounded-full bg-[#222] border border-[#333] flex items-center justify-center text-base font-bold text-white uppercase shadow-sm">
-            {(blog.authorName || 'A').charAt(0)}
-          </div>
-          <div className="flex flex-col justify-center">
-            <span className="font-semibold text-neutral-200 text-base leading-tight mb-0.5">{blog.authorName || 'Admin'}</span>
-            <div className="flex items-center gap-2 text-[13px] font-medium">
-              <span>{new Date(blog.createdAt).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-              <span className="w-1 h-1 rounded-full bg-neutral-600"></span>
-              <span>{Math.ceil((blog.content?.length || 100) / 1200)} min ago</span>
-            </div>
-          </div>
-        </div>
       </header>
 
       <div className="wmde-markdown-var mb-16 rounded-xl bg-transparent">

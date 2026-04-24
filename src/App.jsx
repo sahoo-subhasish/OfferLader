@@ -70,7 +70,7 @@ const DashboardLayout = () => {
           {!isSidebarMinimized ? (
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
-              <span className="text-white font-bold text-lg tracking-wide">OfferLadder</span>
+              <span className="text-white font-bold text-lg tracking-wide">Algo2Offer</span>
             </div>
           ) : (
             <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>

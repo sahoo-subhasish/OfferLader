@@ -1,6 +1,6 @@
-export default function CardCSFund({topic}) {
+export default function CardCSFund({ topic }) {
 
-    const getTopicIcon = (type) => {
+  const getTopicIcon = (type) => {
     switch (type) {
       case 'database':
         return (
@@ -20,8 +20,8 @@ export default function CardCSFund({topic}) {
       case 'cog':
         return (
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-             <circle cx="12" cy="12" r="3"></circle>
-             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
         );
       default:
@@ -66,33 +66,33 @@ export default function CardCSFund({topic}) {
     }
   };
 
-    return (
-        <>
-        <div className="flex flex-col items-center gap-4 rounded-[32px] bg-[#121212] p-4 cursor-pointer hover:bg-[#202224] transition-all duration-300 border border-transparent hover:border-[#333]">
-            
-            <div 
-              className="flex h-[80px] w-full items-center justify-center rounded-full shadow-inner" 
-              style={{ backgroundColor: topic.bgColor }}
-            >
-              <div className="flex items-center gap-3 text-white">
-                <div className="opacity-90">{getTopicIcon(topic.icon)}</div>
-                <h1 className="text-lg md:text-xl font-bold tracking-wide">{topic.title}</h1>
-              </div>
-            </div>
-            
+  return (
+    <>
+      <div className="flex flex-col items-center gap-4 rounded-[16px] bg-[#141414] p-4 cursor-pointer hover:bg-[#202224] transition-all duration-300 border border-transparent hover:border-[#333]">
 
-            <div className="flex flex-col w-full px-2 py-1 gap-2">
-              {topic.links.map((link, idx) => (
-                <div key={idx} className="flex items-center gap-3 w-full p-2.5 rounded-2xl text-[#888] hover:text-white hover:bg-[#2a2a2a] transition-all cursor-pointer group/link">
-                  {getLinkIcon(link.type, "text-[#555] group-hover/link:text-white transition-colors")}
-                  <a href={link.link} target="_blank">
-                  <span className="text-sm font-semibold tracking-wide">{link.label}</span>
-                  </a>
-                </div>
-              ))}
-            </div>
-
+        <div
+          className="flex h-[80px] w-full items-center justify-center rounded-[16px] shadow-inner"
+          style={{ backgroundColor: topic.bgColor }}
+        >
+          <div className="flex items-center gap-3 text-white">
+            <div className="opacity-90">{getTopicIcon(topic.icon)}</div>
+            <h1 className="text-lg md:text-xl font-bold tracking-wide">{topic.title}</h1>
           </div>
-        </>
-    )
+        </div>
+
+
+        <div className="flex flex-col w-full px-2 py-1 gap-2">
+          {topic.links.map((link, idx) => (
+            <div key={idx} className="flex items-center gap-3 w-full p-2.5 rounded-xl text-[#888] hover:text-white hover:bg-[#2a2a2a] transition-all cursor-pointer group/link">
+              {getLinkIcon(link.type, "text-[#555] group-hover/link:text-white transition-colors")}
+              <a href={link.link} target="_blank">
+                <span className="text-sm font-semibold tracking-wide">{link.label}</span>
+              </a>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </>
+  )
 }

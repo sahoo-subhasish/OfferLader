@@ -89,18 +89,5 @@ export const cardInfo = [
             "Interview-focused problem set"
         ],
         desc : "A complete and structured roadmap to mastering Data Structures and Algorithms. Progress step-by-step from basic concepts like math and arrays to advanced topics such as dynamic programming, graphs, and segment trees. Build strong problem-solving skills through a clear and guided progression. Designed to help you confidently tackle top-tier interviews."
-    },
-    {
-        title: "A2Z SHEET",
-        subtitle: "Striver Sheet",
-        bgColor: "#EA763F",
-        path: "a2z",
-        points: [
-            "Structured beginner roadmap",
-            "Arrays, strings, hashing",
-            "Recursion and sorting",
-            "Step-by-step interview prep"
-        ],
-        desc : "Master the fundamentals of programming with this structured beginner roadmap. Start with core concepts, data types, and basic I/O, then progress through control flow, loops, and functions. Build a strong foundation in arrays, strings, hashing, sorting, and recursion. Each topic is presented step-by-step, making it easy to follow and master. Perfect for beginners aiming to build strong logic and prepare for interviews inspired by Striver"
     }
 ];

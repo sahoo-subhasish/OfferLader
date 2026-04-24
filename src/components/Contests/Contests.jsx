@@ -829,7 +829,7 @@ export default function Contests() {
                                   }`}
                               >
                                 {isLive ? (
-                                  <><span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />Live</>
+                                  <><span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />Join Live</>
                                 ) : (
                                   <><svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>Participate</>
                                 )}
@@ -911,7 +911,17 @@ export default function Contests() {
                           rel="noopener noreferrer"
                           className={`flex-1 text-center text-[10px] font-bold py-2.5 rounded-xl active:scale-95 transition-transform ${isLive ? 'bg-[#48D2A0] text-black' : 'bg-[#2a2a2a] text-white'}`}
                         >
-                          {isLive ? '⚡ Join Live' : 'Participate'}
+                          {isLive ? (
+                            <>
+                              <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse inline-block mr-1.5" />
+                              Join Live
+                            </>
+                          ) : (
+                            <>
+                              <svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" className="inline-block mr-1.5 -mt-0.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                              Participate
+                            </>
+                          )}
                         </a>
                       </div>
                     </div>

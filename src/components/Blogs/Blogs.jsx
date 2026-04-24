@@ -97,22 +97,14 @@ export default function Blogs() {
                   </div>
                   
                   <div className="mt-auto pt-4 border-t border-[#262626] flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs text-neutral-500">
-                      <span className="font-semibold text-white">{blog.authorName || 'Admin'}</span>
-                      <span>•</span>
-                      <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
+                    <div className="flex items-center gap-1 text-neutral-500 text-xs font-semibold">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      {blog.likes?.length || 0}
                     </div>
-                    
-                    <div className="flex items-center gap-3 text-xs font-semibold">
-                      <div className="flex items-center gap-1 text-neutral-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        {blog.likes?.length || 0}
-                      </div>
-                      <Link to={`/blogs/${blog.id}`} className="inline-flex items-center justify-center gap-1.5 text-[10px] font-bold text-white bg-[#2a2a2a] hover:bg-white hover:text-black px-4 py-2 rounded-lg transition-all uppercase tracking-widest active:scale-95">
-                        READ
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                      </Link>
-                    </div>
+                    <Link to={`/blogs/${blog.id}`} className="inline-flex items-center justify-center gap-1.5 text-[10px] font-bold text-white bg-[#2a2a2a] hover:bg-white hover:text-black px-4 py-2 rounded-lg transition-all uppercase tracking-widest active:scale-95">
+                      READ
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </Link>
                   </div>
                 </div>
               ))}
