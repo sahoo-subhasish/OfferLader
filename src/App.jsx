@@ -34,7 +34,7 @@ const LoginRoute = () => {
   const location = useLocation();
   const from = location.state?.from || '/home';
 
-  if (user?.isNewUser || user?.isProfileIncomplete) return <Navigate to="/profile-setup" replace />;
+  if (user?.isNewUser || user?.isProfileIncomplete) return <Navigate to="/profile-setup" state={{ from }} replace />;
   if (user) return <Navigate to={from} replace />;
   return <Login />;
 };
@@ -47,7 +47,7 @@ const AuthGuard = ({ children }) => {
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
   if (user.isNewUser || user.isProfileIncomplete) {
-    return <Navigate to="/profile-setup" replace />;
+    return <Navigate to="/profile-setup" state={{ from: location.pathname }} replace />;
   }
   return children;
 };
@@ -62,7 +62,7 @@ const DashboardLayout = () => {
       {/* Mobile Header with Hamburger */}
       <div className="md:hidden flex items-center justify-between px-6 border-b border-[#2a2a2a] bg-[#141414] h-[60px] flex-shrink-0 z-50">
         <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
-        
+
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-white p-2 focus:outline-none"
@@ -99,8 +99,8 @@ const DashboardLayout = () => {
           ) : (
             <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
           )}
-          <button 
-            onClick={() => setIsSidebarMinimized(!isSidebarMinimized)} 
+          <button
+            onClick={() => setIsSidebarMinimized(!isSidebarMinimized)}
             className="text-[#888] hover:text-white transition-colors bg-[#222] p-1.5 rounded-lg border border-[#333]"
             title={isSidebarMinimized ? "Expand Sidebar" : "Collapse Sidebar"}
           >
@@ -125,7 +125,7 @@ const DashboardLayout = () => {
           {/* <CommBtn isMinimized={isSidebarMinimized} /> */}
           <ContestBtn isMinimized={isSidebarMinimized} />
           <BlogsBtn isMinimized={isSidebarMinimized} />
-          
+
           {user?.role === 'admin' && (
             <div className="mt-3 flex flex-col gap-2">
               {!isSidebarMinimized ? (
@@ -133,7 +133,7 @@ const DashboardLayout = () => {
               ) : (
                 <div className="mx-auto w-6 h-[2px] bg-[#333] rounded-full my-1.5"></div>
               )}
-              
+
               <NavLink to="/admin" end title="Dashboard" className={({ isActive }) => `flex flex-row items-center gap-4 w-full py-3 rounded-xl transition-all group ${isActive ? 'bg-[#222] border border-[#333] text-white' : 'text-[#888] hover:bg-[#1a1a1a] hover:text-white'} ${isSidebarMinimized ? 'justify-center px-0' : 'px-4'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                 {!isSidebarMinimized && <span className="text-sm font-medium">Dashboard</span>}
@@ -221,7 +221,7 @@ function App() {
           <Route path="/effectiveCommunication" element={<Contests />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
-          
+
           {user?.role === 'admin' && (
             <>
               <Route path="/admin" element={<AdminDashboard />} />
