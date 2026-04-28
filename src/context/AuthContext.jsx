@@ -24,7 +24,11 @@ export const AuthProvider = ({ children }) => {
           const userDoc = await getDoc(userDocRef);
           
           if (userDoc.exists()) {
-            setUser({ ...currentUser, ...userDoc.data() });
+            const data = userDoc.data();
+            // Check if all mandatory fields are filled
+            const mandatoryFields = ['fullName', 'university', 'batch', 'branch', 'whatsapp', 'vjudgeId'];
+            const isProfileIncomplete = mandatoryFields.some(field => !data[field] || data[field].toString().trim() === '');
+            setUser({ ...currentUser, ...data, isProfileIncomplete });
           } else {
             setUser({ ...currentUser, isNewUser: true });
           }

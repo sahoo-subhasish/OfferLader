@@ -195,12 +195,12 @@ function LeaderboardPanel({ contest, isOpen, onClose }) {
     fetchLeaderboard();
   }, [contest, isOpen]);
 
-  
+
   useEffect(() => {
     if (!contest) prevContestId.current = null;
   }, [contest]);
 
-  
+
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handler);
@@ -387,7 +387,7 @@ function PanelContent({ contest, isOpen, onClose, loading, error, entries, statu
               </svg>
             </div>
             <p style={{ fontSize: 13, color: '#FF716C', fontWeight: 600 }}>{error}</p>
-          
+
           </div>
         )}
 
@@ -548,7 +548,7 @@ export default function Contests() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState(null);
   const [page, setPage] = useState(1);
-  const [, setTick] = useState(0);
+  const [tick, setTick] = useState(0);
   const [selectedContest, setSelectedContest] = useState(null);
   const [panelOpen, setPanelOpen] = useState(false);
 
@@ -609,7 +609,7 @@ export default function Contests() {
       }
     };
     autoSyncEndedContests();
-  }, [contests]);
+  }, [contests, tick]);
 
   // ── Filter + Paginate ────────────────────────────────────────────────────
   const filtered = contests.filter(c => {

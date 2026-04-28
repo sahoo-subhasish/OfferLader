@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Outlet, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Outlet, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import { AllTierData } from './Data/index';
 import LandingPage from './components/LandingPage/LandingPage';
@@ -29,6 +29,29 @@ import AdminContests from './components/Admin/pages/AdminContests';
 import AdminBlogs from './components/Admin/pages/AdminBlogs';
 import { NavLink } from 'react-router-dom';
 
+const LoginRoute = () => {
+  const { user } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from || '/home';
+
+  if (user?.isNewUser || user?.isProfileIncomplete) return <Navigate to="/profile-setup" replace />;
+  if (user) return <Navigate to={from} replace />;
+  return <Login />;
+};
+
+const AuthGuard = ({ children }) => {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
+  if (user.isNewUser || user.isProfileIncomplete) {
+    return <Navigate to="/profile-setup" replace />;
+  }
+  return children;
+};
+
 const DashboardLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSidebarMinimized, setIsSidebarMinimized] = React.useState(false);
@@ -39,6 +62,7 @@ const DashboardLayout = () => {
       {/* Mobile Header with Hamburger */}
       <div className="md:hidden flex items-center justify-between px-6 border-b border-[#2a2a2a] bg-[#141414] h-[60px] flex-shrink-0 z-50">
         <div className="w-6 h-6 rounded-full border-[3px] border-white bg-transparent shadow-[0_0_12px_rgba(255,255,255,0.6)]"></div>
+        
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="text-white p-2 focus:outline-none"
@@ -169,17 +193,14 @@ function App() {
           path="/"
           element={user ? <Navigate to="/home" replace /> : <LandingPage />}
         />
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/home" replace /> : <Login />}
-        />
+        <Route path="/login" element={<LoginRoute />} />
 
         <Route
           path="/profile-setup"
-          element={user && user.isNewUser ? <ProfileSetup /> : <Navigate to={user ? "/home" : "/login"} replace />}
+          element={user && (user.isNewUser || user.isProfileIncomplete) ? <ProfileSetup /> : <Navigate to={user ? "/home" : "/login"} replace />}
         />
 
-        <Route element={user ? (user.isNewUser ? <Navigate to="/profile-setup" replace /> : <DashboardLayout />) : <Navigate to="/login" replace />}>
+        <Route element={<AuthGuard><DashboardLayout /></AuthGuard>}>
           <Route path="/home" element={<Home />} />
           <Route path="/DSA" element={<DSAOutlet />} >
 
