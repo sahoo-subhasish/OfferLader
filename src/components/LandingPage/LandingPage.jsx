@@ -87,7 +87,7 @@ const SNEAK_PEEK_TIERS = [
   {
     name: 'Tier 1',
     label: 'T1',
-    color: '#F378A5',
+    color: '#f381aaff',
     desc: 'Multi-dimensional DP, advanced graph theory, segment trees & complex binary search.',
     questions: [
       { title: 'Median of Two Sorted Arrays', topic: 'Binary Search', difficulty: 'Hard' },
@@ -119,7 +119,6 @@ const SNEAK_PEEK_TIERS = [
 
 
 
-// ─── TIER PLAYGROUND DATA ───────────────────────────────────────────────────
 const TIERS = [
   {
     id: 'beginner',
